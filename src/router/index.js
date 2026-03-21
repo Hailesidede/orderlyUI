@@ -14,6 +14,12 @@ import MerchantOnboarding from '../views/MerchantOnboarding.vue';
 
 const routes = [
   {
+    path: '/login',
+    redirect: to => {
+      return { path: '/', query: to.query };
+    }
+  },
+  {
     path: '/',
     name: 'Auth',
     component: AuthView,
