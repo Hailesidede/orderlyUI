@@ -5,7 +5,7 @@ import FooterNav from './components/FooterNav.vue';
 
 const route = useRoute();
 const showFooter = computed(() => {
-  const hiddenRoutes = ['/', '/success'];
+  const hiddenRoutes = ['/', '/success','/merchant-onboarding'];
   return !hiddenRoutes.includes(route.path);
 });
 </script>
