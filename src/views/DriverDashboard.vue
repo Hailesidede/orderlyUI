@@ -485,6 +485,9 @@ input:focus {
   max-width: 600px;
   margin: 0 auto;
   padding: 1.5rem 1rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 5rem;
 }
 
 h2 {
