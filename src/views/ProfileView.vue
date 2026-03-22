@@ -125,6 +125,9 @@ const handleLogout = async () => {
   max-width: 600px;
   margin: 0 auto;
   padding: 3rem 2rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 5rem;
 }
 
 .profile-header {
