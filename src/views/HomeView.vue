@@ -154,6 +154,7 @@ const handleOrder = async product => {
   max-width: 1200px;
   margin: 0 auto;
   padding: 0 2rem;
+  padding-bottom: 5rem;
 }
 
 .system-state {
