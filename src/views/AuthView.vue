@@ -14,7 +14,7 @@ import AuthForm from '../components/AuthForm.vue';
 
 <style scoped>
 .auth-layout {
-  /* min-height: 100vh; */
+  min-height: 100vh;
   /* Make sure to place the image in your assets folder */
   background-image: url('../assets/authbackground.png');
   background-size: cover;
