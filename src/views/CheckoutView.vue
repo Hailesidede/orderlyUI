@@ -236,6 +236,9 @@ const handlePlaceOrder = async () => {
   max-width: 1000px;
   margin: 0 auto;
   padding: 2rem;
+  overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 5rem;
 }
 
 .checkout-header {
