@@ -142,7 +142,6 @@ const handleOrder = async product => {
 <style scoped>
 .layout-wrapper {
   flex: 1;
-  height: 100%;
   background-color: #f8fafc;
 
   overflow-y: auto;
