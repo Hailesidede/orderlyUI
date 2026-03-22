@@ -14,7 +14,7 @@ import AuthForm from '../components/AuthForm.vue';
 
 <style scoped>
 .auth-layout {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   /* Make sure to place the image in your assets folder */
   background-image: url('../assets/authbackground.png');
   background-size: cover;
@@ -24,9 +24,6 @@ import AuthForm from '../components/AuthForm.vue';
   align-items: center;
   justify-content: center;
   padding-top: 2rem;
-
-  overflow-y: auto;
-  -webkit-overflow-scrolling: touch;
 }
 
 .auth-container {
@@ -36,6 +33,10 @@ import AuthForm from '../components/AuthForm.vue';
   align-items: center;
   gap: 4rem;
   justify-content: space-between;
+
+   overflow-y: auto;
+  -webkit-overflow-scrolling: touch;
+  padding-bottom: 3rem;
 }
 
 /* Responsive adjustment for mobile screens */
