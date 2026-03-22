@@ -125,7 +125,9 @@ onMounted(() => {
 
 const connectSSE = checkoutId => {
   // NOTE: If you are running Vite, ensure your proxy is set up to route /api to localhost:8080
-  eventSource = new EventSource(`/api/v1/payments/stream/${checkoutId}`);
+  const baseUrl = import.meta.env.VITE_API_BASE_URL || ''; 
+eventSource = new EventSource(`${baseUrl}/payments/stream/${checkoutId}`);
+  // eventSource = new EventSource(`/api/v1/payments/stream/${checkoutId}`);
 
   // Listen for the custom event sent from Spring Boot
   eventSource.addEventListener('PAYMENT_RESULT', event => {
