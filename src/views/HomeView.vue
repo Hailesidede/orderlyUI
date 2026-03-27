@@ -68,6 +68,8 @@ import TopNav from '../components/TopNav.vue';
 import CategoryFilter from '../components/CategoryFilter.vue';
 import ProductCard from '../components/ProductCard.vue';
 import ProductModal from '../components/ProductModal.vue';
+import { showToast } from 'vant';
+import { S } from 'vue-router/dist/options-D40y7AuF.mjs';
 
 const route = useRoute();
 const router = useRouter();
@@ -133,8 +135,9 @@ const handleOrder = async product => {
   console.log('product ', product);
   try {
     await cartStore.addItem(product.id, 1);
+    showToast('Added to cart!');
   } catch (err) {
-    alert(cartStore.error || 'Failed to add item to cart');
+    showToast(cartStore.error || 'Failed to add item to cart');
   }
 };
 </script>
