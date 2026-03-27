@@ -1,6 +1,6 @@
 <script setup>
-import AuthHero from '../components/AuthHero.vue';
-import AuthForm from '../components/AuthForm.vue';
+import AuthHero from "../components/AuthHero.vue";
+import AuthForm from "../components/AuthForm.vue";
 </script>
 
 <template>
@@ -16,7 +16,7 @@ import AuthForm from '../components/AuthForm.vue';
 .auth-layout {
   min-height: 100vh;
   /* Make sure to place the image in your assets folder */
-  background-image: url('../assets/authbackground.png');
+  background-image: url("../assets/authbackground.png");
   background-size: cover;
   background-position: center;
   background-repeat: no-repeat;
@@ -33,8 +33,7 @@ import AuthForm from '../components/AuthForm.vue';
   align-items: center;
   gap: 4rem;
   justify-content: space-between;
-
-   overflow-y: auto;
+  overflow-y: auto;
   -webkit-overflow-scrolling: touch;
   padding-bottom: 3rem;
 }
@@ -44,11 +43,18 @@ import AuthForm from '../components/AuthForm.vue';
   .auth-container {
     flex-direction: column;
     text-align: center;
-    gap: 2.5rem;
+    display: flex;
+    /* align-items: center; */
+    /* justify-content: center; */
+    /* gap: 2.5rem; */
+    overflow-y: auto;
+    -webkit-overflow-scrolling: touch;
+    /* padding-bottom: 3rem; */
   }
 
   .auth-layout {
-    padding: 1.5rem;
+    /* padding: 1.5rem; */
+    height: auto;
     align-items: flex-start; /* Prevents clipping on small devices */
     overflow-y: auto;
   }

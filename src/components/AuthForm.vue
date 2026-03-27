@@ -1,20 +1,45 @@
 <template>
   <div class="form-card">
     <div class="toggle-container">
-      <button :class="{ active: isLogin }" @click="isLogin = true">LOGIN</button>
-      <button :class="{ active: !isLogin }" @click="isLogin = false">SIGN UP</button>
+      <button :class="{ active: isLogin }" @click="isLogin = true">
+        LOGIN
+      </button>
+      <button :class="{ active: !isLogin }" @click="isLogin = false">
+        SIGN UP
+      </button>
     </div>
 
-    <h3 class="form-title">{{ isLogin ? 'LOGIN' : 'SIGN-UP' }}</h3>
+    <h3 class="form-title">{{ isLogin ? "LOGIN" : "SIGN-UP" }}</h3>
 
     <form @submit.prevent="handleSubmit" class="form-body">
-      <BaseInput v-if="!isLogin" v-model="formData.fullName" placeholder="Full Name" required />
+      <BaseInput
+        v-if="!isLogin"
+        v-model="formData.fullName"
+        placeholder="Full Name"
+        required
+      />
 
-      <BaseInput v-if="!isLogin" v-model="formData.email" type="email" placeholder="Email" required />
+      <BaseInput
+        v-if="!isLogin"
+        v-model="formData.email"
+        type="email"
+        placeholder="Email"
+        required
+      />
 
-      <BaseInput v-model="formData.phone" type="tel" placeholder="Phone Number (e.g. 0712345678)" required />
+      <BaseInput
+        v-model="formData.phone"
+        type="tel"
+        placeholder="Phone Number (e.g. 0712345678)"
+        required
+      />
 
-      <BaseInput v-model="formData.password" type="password" placeholder="Password" required />
+      <BaseInput
+        v-model="formData.password"
+        type="password"
+        placeholder="Password"
+        required
+      />
 
       <BaseInput
         v-if="!isLogin"
@@ -25,7 +50,7 @@
       />
 
       <button type="submit" class="submit-btn">
-        {{ isLogin ? 'Login' : 'Create Account' }}
+        {{ isLogin ? "Login" : "Create Account" }}
       </button>
     </form>
 
@@ -35,26 +60,34 @@
 
     <div class="social-login">
       <button class="social-btn">
-        <img src="https://www.svgrepo.com/show/475656/google-color.svg" alt="Google" width="20" />
+        <img
+          src="https://www.svgrepo.com/show/475656/google-color.svg"
+          alt="Google"
+          width="20"
+        />
       </button>
       <button class="social-btn">
-        <img src="https://www.svgrepo.com/show/511330/apple-173.svg" alt="Apple" width="20" />
+        <img
+          src="https://www.svgrepo.com/show/511330/apple-173.svg"
+          alt="Apple"
+          width="20"
+        />
       </button>
     </div>
 
     <p class="switch-mode">
-      {{ isLogin ? "Don't have an account?" : 'Already have an account?' }}
+      {{ isLogin ? "Don't have an account?" : "Already have an account?" }}
       <a href="#" @click.prevent="isLogin = !isLogin">
-        {{ isLogin ? 'Sign Up' : 'Log In' }}
+        {{ isLogin ? "Sign Up" : "Log In" }}
       </a>
     </p>
   </div>
 </template>
 <script setup>
-import { ref } from 'vue';
-import BaseInput from './BaseInput.vue';
-import { useRouter, useRoute } from 'vue-router';
-import { useAuthStore } from '../stores/auth';
+import { ref } from "vue";
+import BaseInput from "./BaseInput.vue";
+import { useRouter, useRoute } from "vue-router";
+import { useAuthStore } from "../stores/auth";
 
 const router = useRouter();
 const route = useRoute();
@@ -64,11 +97,11 @@ const isLogin = ref(!route.query.merchantId);
 const isLoading = ref(false);
 
 const formData = ref({
-  fullName: '',
-  email: '',
-  phone: '',
-  password: '',
-  confirmPassword: '',
+  fullName: "",
+  email: "",
+  phone: "",
+  password: "",
+  confirmPassword: "",
 });
 
 const handleSubmit = async () => {
@@ -82,7 +115,7 @@ const handleSubmit = async () => {
       });
     } else {
       if (formData.value.password !== formData.value.confirmPassword) {
-        alert('Passwords do not match!');
+        alert("Passwords do not match!");
         isLoading.value = false;
         return;
       }
@@ -90,15 +123,20 @@ const handleSubmit = async () => {
         fullName: formData.value.fullName,
         phoneNumber: formData.value.phone,
         password: formData.value.password,
-        role: route.query.role === 'DISTRIBUTOR' ? 'DISTRIBUTOR' : 'CUSTOMER',
+        role: route.query.role === "DISTRIBUTOR" ? "DISTRIBUTOR" : "CUSTOMER",
         referralMerchantId: route.query.merchantId || null,
       });
     }
-    const redirectPath = route.query.redirect || (route.query.role === 'DISTRIBUTOR' ? '/delivery-dashboard' : '/home');
+    const redirectPath =
+      route.query.redirect ||
+      (route.query.role === "DISTRIBUTOR" ? "/delivery-dashboard" : "/home");
     router.push(redirectPath);
   } catch (error) {
-    console.error('Auth failed', error);
-    alert(error.response?.data?.message || 'Authentication failed. Please try again.');
+    console.error("Auth failed", error);
+    alert(
+      error.response?.data?.message ||
+        "Authentication failed. Please try again.",
+    );
   } finally {
     isLoading.value = false;
   }
@@ -120,6 +158,36 @@ const handleSubmit = async () => {
   border-radius: 24px;
   padding: 2.5rem;
   box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.25);
+}
+
+@media (max-width: 900px) {
+  .form-card {
+  }
+
+  .toggle-container {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  .submit-btn {
+    margin-right: 10px;
+    margin-left: 10px;
+  }
+
+  :deep(.base-input) {
+    width: 86%;
+    padding: 0.875rem 1rem;
+    border: 1px solid var(--border-color);
+    border-radius: 10px;
+    font-size: 0.95rem;
+    background: var(--bg-input);
+    outline: none;
+    transition:
+      border-color 0.2s ease,
+      box-shadow 0.2s ease;
+    font-family: inherit;
+    color: var(--text-main);
+  }
 }
 
 .toggle-container {
@@ -191,7 +259,7 @@ const handleSubmit = async () => {
 
 .divider::before,
 .divider::after {
-  content: '';
+  content: "";
   flex: 1;
   border-bottom: 1px solid var(--border-color);
 }
@@ -217,7 +285,9 @@ const handleSubmit = async () => {
   align-items: center;
   justify-content: center;
   cursor: pointer;
-  transition: transform 0.2s ease, background 0.2s ease;
+  transition:
+    transform 0.2s ease,
+    background 0.2s ease;
 }
 
 .social-btn:hover {
