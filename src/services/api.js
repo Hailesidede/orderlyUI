@@ -1,9 +1,9 @@
 import axios from 'axios';
-// We dynamically import the store inside the interceptors to prevent
-// circular dependency errors between Pinia and Axios during app boot.
 import { useAuthStore } from '../stores/auth';
+import { showLoadingToast, closeToast } from 'vant';
 
 const baseURL = import.meta.env.VITE_API_BASE_URL;
+console.log('API Base URL:', baseURL);
 
 const apiClient = axios.create({
   baseURL: baseURL,
@@ -12,6 +12,27 @@ const apiClient = axios.create({
     'Content-Type': 'application/json',
   },
 });
+
+let activeRequests = 0;
+
+const startLoading = () => {
+  if (activeRequests === 0) {
+    showLoadingToast({
+      message: 'Loading...',
+      forbidClick: true, // Prevents user interaction
+      duration: 0,       // Keep it open until manually closed
+    });
+  }
+  activeRequests++;
+};
+
+const stopLoading = () => {
+  activeRequests--;
+  if (activeRequests <= 0) {
+    activeRequests = 0;
+    closeToast();
+  }
+};
 
 // --- QUEUE MANAGEMENT STATE ---
 let isRefreshing = false;
@@ -31,6 +52,7 @@ const processQueue = (error, token = null) => {
 // --- REQUEST INTERCEPTOR ---
 apiClient.interceptors.request.use(
   config => {
+    startLoading();
     const authStore = useAuthStore();
     const token = authStore.accessToken;
 
@@ -39,12 +61,17 @@ apiClient.interceptors.request.use(
     }
     return config;
   },
-  error => Promise.reject(error)
+  error =>{
+    stopLoading();
+    Promise.reject(error)
+  } 
 );
 
 // --- RESPONSE INTERCEPTOR ---
 apiClient.interceptors.response.use(
-  response => response, // Pass through successful responses
+  response => {
+    stopLoading();
+    return response}, // Pass through successful responses
   async error => {
     const originalRequest = error.config;
 
@@ -101,6 +128,7 @@ apiClient.interceptors.response.use(
     }
 
     // Return any other type of error (400, 403, 500) directly to the calling component
+    stopLoading();
     return Promise.reject(error);
   }
 );
