@@ -88,13 +88,15 @@ import { ref } from "vue";
 import BaseInput from "./BaseInput.vue";
 import { useRouter, useRoute } from "vue-router";
 import { useAuthStore } from "../stores/auth";
+import { showFailToast, showSuccessToast } from "vant";
+import { showLoadingToast } from "vant";
 
 const router = useRouter();
 const route = useRoute();
 const authStore = useAuthStore();
 
 const isLogin = ref(!route.query.merchantId);
-const isLoading = ref(false);
+const isLoading = ref(true);
 
 const formData = ref({
   fullName: "",
@@ -113,9 +115,10 @@ const handleSubmit = async () => {
         password: formData.value.password,
         referralMerchantId: route.query.merchantId || null,
       });
+      showSuccessToast("Login successful!");
     } else {
       if (formData.value.password !== formData.value.confirmPassword) {
-        alert("Passwords do not match!");
+        showFailToast("Passwords do not match!");
         isLoading.value = false;
         return;
       }
@@ -126,6 +129,7 @@ const handleSubmit = async () => {
         role: route.query.role === "DISTRIBUTOR" ? "DISTRIBUTOR" : "CUSTOMER",
         referralMerchantId: route.query.merchantId || null,
       });
+      showSuccessToast("Account created successfully!");
     }
     const redirectPath =
       route.query.redirect ||
@@ -133,7 +137,7 @@ const handleSubmit = async () => {
     router.push(redirectPath);
   } catch (error) {
     console.error("Auth failed", error);
-    alert(
+    showFailToast(
       error.response?.data?.message ||
         "Authentication failed. Please try again.",
     );
@@ -144,10 +148,6 @@ const handleSubmit = async () => {
 </script>
 
 <style scoped>
-/* Removed all .input-group and input specific styles from here.
-  They are now perfectly encapsulated in BaseInput.vue. 
-*/
-
 .form-card {
   width: 100%;
   max-width: 460px;
